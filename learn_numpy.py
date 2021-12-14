@@ -23,7 +23,6 @@ def forward(network, x):
 
     a1 = np.dot(x, W1) + b1
     z1 = identity_function(a1)
-    print(a1)
 
     a2 = np.dot(z1, W2) + b2
     z2 = identity_function(a2)
@@ -40,26 +39,35 @@ def for_forward(network, x):
 
     x_h = x.shape[0]
 
-    W1_h, W1_w = W1.shape
-    a1 = np.zeros(shape=W1_w)
-    for i in range(W1_w):  # 3
-        for j in range(W1_h):  # 2
-            a1[i] += (W1[j][i] * x[j])
+    def cal_network(x, W, b):
+        W_h, W_w = W.shape
+        a = np.zeros(shape=W_w)
+        for i in range(W_w):  # 3
+            for j in range(W_h):  # 2
+                a[i] += (W[j][i] * x[j])
 
-    b1_h = b1.shape[0]
-    for i in range(b1_h):
-        a1[i] += b1[i]
+        b_h = b.shape[0]
+        for i in range(b_h):
+            a[i] += b[i]
 
-    print(a1)
+        return a
 
+    a1 = cal_network(x, W1, b1)
+    z1 = identity_function(a1)
 
-    return a1
+    a2 = cal_network(z1, W2, b2)
+    z2 = identity_function(a2)
+
+    a3 = cal_network(z2, W3, b3)
+    z3 = identity_function(a3)
+
+    return z3
 
 
 network = init_network()
 x = np.array([1.0, 5.0])
 y = forward(network, x)
-# print(y)
+print(y)
 
 y2 = for_forward(network, x)
-# print(y2)
+print(y2)
