@@ -4,4 +4,4 @@
 
 ## reference
 
-https://github.com/youbeebee/deeplearning_from_scratch
+https://github.com/WegraLee/deep-learning-from-scratch
